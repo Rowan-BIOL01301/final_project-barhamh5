@@ -1,8 +1,11 @@
 ---
 title: "Final Project"
 subtitle: "Data Science for Biologists, Spring 2021"
-author: "Your name goes here"
-output: html_document
+author: "Hannah Barham"
+output: 
+ html_document:
+   theme: cerulean
+   highlight: espresso 
 editor_options: 
   chunk_output_type: console
 ---
@@ -12,25 +15,43 @@ editor_options:
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, echo = TRUE, include = TRUE)
 
 # Load all libraries you use HERE:
+library(tidyverse) 
+
 ```
 
 <br><br>
 
 ## Introduction
 
-```{r read-examine-data}
+This dataset includes metadata from Spotify's API with 6 genres and thousands of songs. It ranks these songs and categories according to artist, genre, and other variables while also ranking cool things like danceability, tempo, key, and much more. I think this dataset would be interesting to work with being as a spend a lot of my free time listening to music on Spotify, including a lot of the artists mentioned so it would be fun to see what kind of information I can find from this data. [Spotify Songs](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-01-21/readme.md).
 
+```{r read-examine-data}
+spotify_songs <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv")
+dplyr::glimpse(spotify_songs)
 ```
 
 <br><br>
 
 ## Question 1
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### Which playlist genre had the highest average dancebility?
 
-### Methods
-
-### Answer
+### Methods 
+``` {r Highest_Mean_Danceability}
+spotify_songs %>% 
+  group_by(playlist_genre) %>%
+  summarize(dance_bar_height=mean(danceability),        
+            dance_label_height = dance_bar_height+0.035, 
+            dance_label_rounded = round(dance_bar_height,3) ) %>%
+  ungroup() %>%
+  ggplot(aes(x=playlist_genre)) +
+  geom_col(aes(y= dance_bar_height),fill= "pink", color= "black")+
+  geom_text(aes(y= dance_label_height,
+                label=dance_label_rounded))+
+  labs(x= "Playlist Genre", y= "Danceability")
+``` 
+   
+### Rap had the highest average dancebility. 
 
 Replace this text with your answer to your question.
 
