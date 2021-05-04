@@ -51,44 +51,82 @@ spotify_songs %>%
   labs(x= "Playlist Genre", y= "Danceability")
 ``` 
    
-### Rap had the highest average dancebility. 
+### Answer 
 
-Replace this text with your answer to your question.
+Rap had the highest average danceability.
 
 
 <br><br>
 
 ## Question 2
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### Which featured The Tempations song had the lowest track popularity?
 
 ### Methods
 
+```{r Temptations_Popularity, fig.height=5, fig.width=8.5}
+spotify_songs %>%
+  filter(track_artist== "The Temptations") %>%
+  select(track_popularity, track_name) %>%
+  ggplot(aes(y=track_popularity, x=track_name)) +
+  geom_col(fill= "lavender", color= "pink")+
+  labs(x="The Temptations Track Names", y="Track Popularity")+
+  theme_dark()
+  
+
+```
+
 ### Answer
 
-Replace this text with your answer to your question.
+"Papa Was A Rollin' Stone" had the lowest track popularity. 
 
 <br><br>
 
 ## Question 3
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### Between genres dance pop, pop remix, and dance room which had the longest duration? 
 
 ### Methods
+```{r Playlist_Duration}
+my_playlists <- c("Dance Room", "Pop Remix", "Dance Pop")
+spotify_songs %>%
+  filter(playlist_name %in% my_playlists) %>%
+  select(playlist_name, duration_ms) %>%
+  group_by(playlist_name) %>%
+  summarize(ms_bar_height=sum((duration_ms)/1000)/60) %>%
+  ungroup() %>%
+  ggplot(aes(x=playlist_name)) +
+  geom_col(aes(y= ms_bar_height),fill= "light green", color= "black")+
+  labs(x= "Playlist Name", y= "Duration (minutes)")+
+  theme_classic()
+  
+  
+```
 
 ### Answer
 
-Replace this text with your answer to your question.
+Dance Room had the shortest duration.
 
 
 <br><br>
 
 ## Question 4
 
-#### REPLACE TEXT WITH YOUR QUESTION. Your question should literally be a level-4 header.
+#### Are India.Arie's song energy and tempo positively or negatively correlated?
 
 ### Methods
+``` {r India.Arie, fig.length=5, fig.width=6}
+spotify_songs %>%
+  filter(track_artist== "India.Arie") %>%
+  select(energy, tempo) %>%
+  ggplot()+
+  aes(y=energy, x=tempo)+
+  geom_point(size=2.5, color="purple")+
+  geom_smooth(method="lm", color="black")+
+  labs(x="Tempo (BPM)", y="Energy", title="India.Arie's Song Energy and Tempo")+
+  theme_classic()
+```
 
 ### Answer
 
-Replace this text with your answer to your question.
+India.Arie's song energy and tempo are positively correlated. 
