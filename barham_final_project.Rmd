@@ -37,7 +37,7 @@ dplyr::glimpse(spotify_songs)
 #### Which playlist genre had the highest average dancebility?
 
 ### Methods 
-``` {r Highest_Mean_Danceability}
+``` {r Highest_Mean_Danceability, fig.height=5, fig.width=6}
 spotify_songs %>% 
   group_by(playlist_genre) %>%
   summarize(dance_bar_height=mean(danceability),        
@@ -87,7 +87,7 @@ spotify_songs %>%
 #### Between genres dance pop, pop remix, and dance room which had the longest duration? 
 
 ### Methods
-```{r Playlist_Duration}
+```{r Playlist_Duration, fig.height=5, fig.width=6}
 my_playlists <- c("Dance Room", "Pop Remix", "Dance Pop")
 spotify_songs %>%
   filter(playlist_name %in% my_playlists) %>%
